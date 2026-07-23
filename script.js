@@ -1,9 +1,11 @@
+// DOM element references, grabbed once when the script loads
 const searchForm = document.getElementById("search-form");
 const cityInput = document.getElementById("city-input");
 const appMain = document.getElementById("app-main");
 const searchButton = searchForm.querySelector("button");
 const recentSearchesContainer = document.getElementById("recent-searches");
 
+// Weatherstack API key and temperature unit state
 const ACCESS_KEY = "YOUR_WEATHERSTACK_ACCESS_KEY"; // paste your real key here
 
 let lastWeatherData = null;
@@ -13,6 +15,8 @@ function convertTemp(celsius) {
   return currentUnit === "C" ? celsius : Math.round((celsius * 9) / 5 + 32);
 }
 
+// Fetches current weather for a given city from the Weatherstack API.
+// Throws an error if the request fails or the city can't be found.
 async function fetchWeather(city) {
   const url = `http://api.weatherstack.com/current?access_key=${ACCESS_KEY}&query=${encodeURIComponent(city)}`;
 
@@ -32,6 +36,8 @@ async function fetchWeather(city) {
   return data;
 }
 
+// Renders the weather card UI using the fetched data.
+// Also stores the data so the unit toggle can re-render without a new fetch.
 function renderWeather(data) {
   lastWeatherData = data;
   const { location, current } = data;
@@ -88,27 +94,9 @@ appMain.addEventListener("click", (e) => {
     currentUnit = currentUnit === "C" ? "F" : "C";
     renderWeather(lastWeatherData);
   }
-
-  recentSearchesContainer.addEventListener("click", (e) => {
-  if (e.target.classList.contains("recent-chip")) {
-    const city = e.target.textContent;
-    cityInput.value = city;
-    runSearch(city);
-  }
-
-  if (e.target.id === "clear-recent") {
-    localStorage.removeItem("recentSearches");
-    renderRecentSearches();
-  }
-});
-  recentSearchesContainer.addEventListener("click", (e) => {
-  if (e.target.id === "clear-recent") {
-    localStorage.removeItem("recentSearches");
-    renderRecentSearches();
-  }
-});
 });
 
+// Renders an error message in place of the weather card.
 function renderError(message) {
   appMain.innerHTML = `
     <div class="state-message error-state">
@@ -118,6 +106,7 @@ function renderError(message) {
   `;
 }
 
+// Recent search history, persisted in localStorage as an array of city names.
 function getRecentSearches() {
   return JSON.parse(localStorage.getItem("recentSearches")) || [];
 }
@@ -148,6 +137,22 @@ function renderRecentSearches() {
   `;
 }
 
+recentSearchesContainer.addEventListener("click", (e) => {
+  if (e.target.classList.contains("recent-chip")) {
+    const city = e.target.textContent;
+    cityInput.value = city;
+    runSearch(city);
+  }
+
+  if (e.target.id === "clear-recent") {
+    localStorage.removeItem("recentSearches");
+    renderRecentSearches();
+  }
+});
+
+// Runs a full search: shows loading state, fetches data, then renders
+// either the result or an error. Used both for manual searches and
+// for auto-restoring the last searched city on page load.
 async function runSearch(city) {
   appMain.innerHTML = `
     <div class="state-message loading-state">
