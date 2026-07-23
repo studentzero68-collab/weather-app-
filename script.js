@@ -91,6 +91,18 @@ function renderError(message) {
   `;
 }
 
+function getRecentSearches() {
+  return JSON.parse(localStorage.getItem("recentSearches")) || [];
+}
+
+function saveRecentSearch(city) {
+  let recent = getRecentSearches();
+  recent = recent.filter((c) => c.toLowerCase() !== city.toLowerCase());
+  recent.unshift(city);
+  recent = recent.slice(0, 5);
+  localStorage.setItem("recentSearches", JSON.stringify(recent));
+}
+
 async function runSearch(city) {
   appMain.innerHTML = `
     <div class="state-message loading-state">
@@ -105,6 +117,7 @@ async function runSearch(city) {
     const data = await fetchWeather(city);
     renderWeather(data);
     localStorage.setItem("lastCity", city);
+    saveRecentSearch(city);
   } catch (error) {
     renderError(error.message);
   } finally {
