@@ -20,8 +20,9 @@
             <p class="app-subtitle">Search any city to see current conditions.</p>
         </header>
 
-        <form class="search-bar" id="search-form">
-            <input type="text" id="city-input" placeholder="Search a city (e.g. Johannesburg)">
+        <form class="search-bar" id="search-form" role="search">
+            <label for="city-input" class="visually-hidden">City name</label>
+            <input type="text" id="city-input" placeholder="Search a city (e.g. Johannesburg)" aria-label="City search">
             <button type="submit">Search</button>
         </form>
 
