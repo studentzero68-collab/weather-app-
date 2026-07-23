@@ -81,6 +81,14 @@ appMain.addEventListener("click", (e) => {
     currentUnit = currentUnit === "C" ? "F" : "C";
     renderWeather(lastWeatherData);
   }
+
+  recentSearchesContainer.addEventListener("click", (e) => {
+  if (e.target.classList.contains("recent-chip")) {
+    const city = e.target.textContent;
+    cityInput.value = city;
+    runSearch(city);
+  }
+});
 });
 
 function renderError(message) {
