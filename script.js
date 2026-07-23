@@ -6,7 +6,7 @@ const searchButton = searchForm.querySelector("button");
 const recentSearchesContainer = document.getElementById("recent-searches");
 
 // Weatherstack API key and temperature unit state
-const ACCESS_KEY = "YOUR_WEATHERSTACK_ACCESS_KEY"; // paste your real key here
+const ACCESS_KEY = "7c2347f1749ddf9c52d138e69fd8fb95"; // paste your real key here
 
 let lastWeatherData = null;
 let currentUnit = "C";
