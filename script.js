@@ -90,6 +90,7 @@ searchForm.addEventListener("submit", async (e) => {
   try {
     const data = await fetchWeather(city);
     renderWeather(data);
+    cityInput.value = "";
   } catch (error) {
     renderError(error.message);
   }
