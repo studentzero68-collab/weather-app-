@@ -23,6 +23,48 @@ async function fetchWeather(city) {
   return data;
 }
 
+function renderWeather(data) {
+  const { location, current } = data;
+
+  appMain.innerHTML = `
+    <div class="weather-card">
+      <div class="weather-card-header">
+        <div>
+          <h2>${location.name}</h2>
+          <p class="weather-region">${location.region ? location.region + ", " : ""}${location.country}</p>
+        </div>
+        <img class="weather-icon" src="${current.weather_icons?.[0] || ""}" alt="${current.weather_descriptions?.[0] || "Weather icon"}">
+      </div>
+
+      <div class="weather-temp">
+        <span class="temp-value">${current.temperature}°C</span>
+        <span class="temp-desc">${current.weather_descriptions?.[0] || ""}</span>
+      </div>
+
+      <div class="weather-grid">
+        <div class="weather-stat">
+          <span class="stat-label">Feels like</span>
+          <span class="stat-value">${current.feelslike}°C</span>
+        </div>
+        <div class="weather-stat">
+          <span class="stat-label">Humidity</span>
+          <span class="stat-value">${current.humidity}%</span>
+        </div>
+        <div class="weather-stat">
+          <span class="stat-label">Wind</span>
+          <span class="stat-value">${current.wind_speed} km/h ${current.wind_dir}</span>
+        </div>
+        <div class="weather-stat">
+          <span class="stat-label">UV index</span>
+          <span class="stat-value">${current.uv_index}</span>
+        </div>
+      </div>
+
+      <p class="weather-updated">Local time: ${location.localtime}</p>
+    </div>
+  `;
+}
+
 searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const city = cityInput.value.trim();
@@ -38,7 +80,7 @@ searchForm.addEventListener("submit", async (e) => {
 
   try {
     const data = await fetchWeather(city);
-    console.log("Weather data:", data);
+    renderWeather(data);
   } catch (error) {
     console.error("Fetch failed:", error.message);
   }
