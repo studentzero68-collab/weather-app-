@@ -65,6 +65,15 @@ function renderWeather(data) {
   `;
 }
 
+function renderError(message) {
+  appMain.innerHTML = `
+    <div class="state-message error-state">
+      <p>Couldn't load that forecast.</p>
+      <p class="error-detail">${message}</p>
+    </div>
+  `;
+}
+
 searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const city = cityInput.value.trim();
@@ -82,6 +91,6 @@ searchForm.addEventListener("submit", async (e) => {
     const data = await fetchWeather(city);
     renderWeather(data);
   } catch (error) {
-    console.error("Fetch failed:", error.message);
+    renderError(error.message);
   }
 });
