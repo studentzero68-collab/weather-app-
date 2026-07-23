@@ -272,3 +272,13 @@ body {
 .footer-links a:hover {
   text-decoration: underline;
 }
+
+.clear-recent {
+  border: none;
+  background: none;
+  color: #9a2f2f;
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 4px;
+}

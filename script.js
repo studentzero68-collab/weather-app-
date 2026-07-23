@@ -88,6 +88,17 @@ appMain.addEventListener("click", (e) => {
     cityInput.value = city;
     runSearch(city);
   }
+
+  if (e.target.id === "clear-recent") {
+    localStorage.removeItem("recentSearches");
+    renderRecentSearches();
+  }
+});
+  recentSearchesContainer.addEventListener("click", (e) => {
+  if (e.target.id === "clear-recent") {
+    localStorage.removeItem("recentSearches");
+    renderRecentSearches();
+  }
 });
 });
 
@@ -126,6 +137,7 @@ function renderRecentSearches() {
     ${recent
       .map((city) => `<button type="button" class="recent-chip">${city}</button>`)
       .join("")}
+    <button type="button" id="clear-recent" class="clear-recent">Clear</button>
   `;
 }
 
