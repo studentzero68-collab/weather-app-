@@ -18,7 +18,12 @@ function convertTemp(celsius) {
 // Fetches current weather for a given city from the Weatherstack API.
 // Throws an error if the request fails or the city can't be found.
 async function fetchWeather(city) {
-  const url = `http://api.weatherstack.com/current?access_key=${ACCESS_KEY}&query=${encodeURIComponent(city)}`;
+  const weatherstackUrl = `http://api.weatherstack.com/current?access_key=${ACCESS_KEY}&query=${encodeURIComponent(city)}`;
+
+  // Weatherstack's free plan only supports http://, which browsers block
+  // when the site itself is served over https://. This proxy fetches the
+  // http:// URL server-side and returns it to us over https://.
+  const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(weatherstackUrl)}`;
 
   const response = await fetch(url);
 
