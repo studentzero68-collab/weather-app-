@@ -5,6 +5,13 @@ const searchButton = searchForm.querySelector("button");
 
 const ACCESS_KEY = "YOUR_WEATHERSTACK_ACCESS_KEY"; // paste your real key here
 
+let lastWeatherData = null;
+let currentUnit = "C";
+
+function convertTemp(celsius) {
+  return currentUnit === "C" ? celsius : Math.round((celsius * 9) / 5 + 32);
+}
+
 async function fetchWeather(city) {
   const url = `http://api.weatherstack.com/current?access_key=${ACCESS_KEY}&query=${encodeURIComponent(city)}`;
 
@@ -25,6 +32,7 @@ async function fetchWeather(city) {
 }
 
 function renderWeather(data) {
+  lastWeatherData = data;
   const { location, current } = data;
 
   appMain.innerHTML = `
@@ -38,14 +46,15 @@ function renderWeather(data) {
       </div>
 
       <div class="weather-temp">
-        <span class="temp-value">${current.temperature}°C</span>
+        <span class="temp-value">${convertTemp(current.temperature)}°${currentUnit}</span>
         <span class="temp-desc">${current.weather_descriptions?.[0] || ""}</span>
+        <button type="button" id="unit-toggle" class="unit-toggle">°${currentUnit === "C" ? "F" : "C"}</button>
       </div>
 
       <div class="weather-grid">
         <div class="weather-stat">
           <span class="stat-label">Feels like</span>
-          <span class="stat-value">${current.feelslike}°C</span>
+          <span class="stat-value">${convertTemp(current.feelslike)}°${currentUnit}</span>
         </div>
         <div class="weather-stat">
           <span class="stat-label">Humidity</span>
@@ -65,6 +74,13 @@ function renderWeather(data) {
     </div>
   `;
 }
+
+appMain.addEventListener("click", (e) => {
+  if (e.target.id === "unit-toggle" && lastWeatherData) {
+    currentUnit = currentUnit === "C" ? "F" : "C";
+    renderWeather(lastWeatherData);
+  }
+});
 
 function renderError(message) {
   appMain.innerHTML = `

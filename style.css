@@ -6,9 +6,6 @@
 
 body {
   font-family: Arial, sans-serif;
-}
-
-body {
   background: linear-gradient(180deg, #eaf3ff 0%, #dbe9fb 45%, #cfe0f5 100%);
   color: #1c2b3d;
   min-height: 100vh;
@@ -72,6 +69,11 @@ body {
   outline-offset: 1px;
 }
 
+.input-error {
+  border-color: #c0392b !important;
+  outline: 2px solid #c0392b !important;
+}
+
 .search-bar button {
   padding: 12px 20px;
   border: none;
@@ -86,6 +88,7 @@ body {
 .search-bar button:hover {
   background: #16324f;
 }
+
 .search-bar button:disabled {
   background: #9db3c9;
   cursor: not-allowed;
@@ -192,6 +195,18 @@ body {
   color: #4a6280;
 }
 
+.unit-toggle {
+  border: 1px solid #b9cde3;
+  background: #f3f7fc;
+  color: #1c3f66;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: auto;
+}
+
 .weather-grid {
   margin-top: 24px;
   display: grid;
@@ -227,6 +242,18 @@ body {
   color: #8199b8;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .app-footer {
   margin-top: 48px;
   font-size: 0.8rem;
@@ -244,16 +271,4 @@ body {
 
 .footer-links a:hover {
   text-decoration: underline;
-}
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
