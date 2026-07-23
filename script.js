@@ -75,18 +75,7 @@ function renderError(message) {
   `;
 }
 
-searchForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const city = cityInput.value.trim();
-
-  if (!city) {
-    cityInput.classList.add("input-error");
-    cityInput.placeholder = "Please enter a city name";
-    return;
-  }
-
-  cityInput.classList.remove("input-error");
-
+async function runSearch(city) {
   appMain.innerHTML = `
     <div class="state-message loading-state">
       <div class="spinner"></div>
@@ -99,10 +88,31 @@ searchForm.addEventListener("submit", async (e) => {
   try {
     const data = await fetchWeather(city);
     renderWeather(data);
-    cityInput.value = "";
+    localStorage.setItem("lastCity", city);
   } catch (error) {
     renderError(error.message);
   } finally {
     searchButton.disabled = false;
   }
+}
+
+searchForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const city = cityInput.value.trim();
+
+  if (!city) {
+    cityInput.classList.add("input-error");
+    cityInput.placeholder = "Please enter a city name";
+    return;
+  }
+
+  cityInput.classList.remove("input-error");
+  await runSearch(city);
+  cityInput.value = "";
 });
+
+const lastCity = localStorage.getItem("lastCity");
+if (lastCity) {
+  cityInput.value = lastCity;
+  runSearch(lastCity);
+}
