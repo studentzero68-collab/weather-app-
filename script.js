@@ -29,6 +29,13 @@ searchForm.addEventListener("submit", async (e) => {
 
   if (!city) return;
 
+  appMain.innerHTML = `
+    <div class="state-message loading-state">
+      <div class="spinner"></div>
+      <p>Fetching the forecast…</p>
+    </div>
+  `;
+
   try {
     const data = await fetchWeather(city);
     console.log("Weather data:", data);
