@@ -86,6 +86,10 @@ body {
 .search-bar button:hover {
   background: #16324f;
 }
+.search-bar button:disabled {
+  background: #9db3c9;
+  cursor: not-allowed;
+}
 
 .app-main {
   width: 100%;
