@@ -71,6 +71,13 @@ function renderWeather(data) {
         </div>
       </div>
 
+      ${current.astro ? `
+      <div class="astro-row">
+        <span>🌅 Sunrise: ${current.astro.sunrise}</span>
+        <span>🌇 Sunset: ${current.astro.sunset}</span>
+      </div>
+      ` : ""}
+
       <p class="weather-updated">Local time: ${location.localtime}</p>
     </div>
   `;
