@@ -23,11 +23,16 @@ async function fetchWeather(city) {
   return data;
 }
 
-searchForm.addEventListener("submit", (e) => {
+searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const city = cityInput.value.trim();
 
   if (!city) return;
 
-  console.log("Searching for:", city);
+  try {
+    const data = await fetchWeather(city);
+    console.log("Weather data:", data);
+  } catch (error) {
+    console.error("Fetch failed:", error.message);
+  }
 });
