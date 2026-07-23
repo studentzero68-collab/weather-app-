@@ -226,3 +226,22 @@ body {
   font-size: 0.8rem;
   color: #8199b8;
 }
+
+.app-footer {
+  margin-top: 48px;
+  font-size: 0.8rem;
+  color: #6a83a2;
+}
+
+.footer-links {
+  margin-top: 6px;
+}
+
+.footer-links a {
+  color: #3f7cc9;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
