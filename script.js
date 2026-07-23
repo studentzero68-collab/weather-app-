@@ -1,6 +1,7 @@
 const searchForm = document.getElementById("search-form");
 const cityInput = document.getElementById("city-input");
 const appMain = document.getElementById("app-main");
+const searchButton = searchForm.querySelector("button");
 
 const ACCESS_KEY = "YOUR_WEATHERSTACK_ACCESS_KEY"; // paste your real key here
 
@@ -74,13 +75,17 @@ function renderError(message) {
   `;
 }
 
-const searchButton = searchForm.querySelector("button");
-
 searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const city = cityInput.value.trim();
 
-  if (!city) return;
+  if (!city) {
+    cityInput.classList.add("input-error");
+    cityInput.placeholder = "Please enter a city name";
+    return;
+  }
+
+  cityInput.classList.remove("input-error");
 
   appMain.innerHTML = `
     <div class="state-message loading-state">
