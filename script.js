@@ -74,6 +74,8 @@ function renderError(message) {
   `;
 }
 
+const searchButton = searchForm.querySelector("button");
+
 searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const city = cityInput.value.trim();
@@ -87,11 +89,15 @@ searchForm.addEventListener("submit", async (e) => {
     </div>
   `;
 
+  searchButton.disabled = true;
+
   try {
     const data = await fetchWeather(city);
     renderWeather(data);
     cityInput.value = "";
   } catch (error) {
     renderError(error.message);
+  } finally {
+    searchButton.disabled = false;
   }
 });
