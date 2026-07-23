@@ -6,7 +6,7 @@ const searchButton = searchForm.querySelector("button");
 const recentSearchesContainer = document.getElementById("recent-searches");
 
 // Weatherstack API key and temperature unit state
-const ACCESS_KEY = "7c2347f1749ddf9c52d138e69fd8fb95"; // paste your real key here
+const ACCESS_KEY = "7c2347f1749ddf9c52d138e69fd8fb95"; 
 
 let lastWeatherData = null;
 let currentUnit = "C";
@@ -18,12 +18,7 @@ function convertTemp(celsius) {
 // Fetches current weather for a given city from the Weatherstack API.
 // Throws an error if the request fails or the city can't be found.
 async function fetchWeather(city) {
-  const weatherstackUrl = `http://api.weatherstack.com/current?access_key=${ACCESS_KEY}&query=${encodeURIComponent(city)}`;
-
-  // Weatherstack's free plan only supports http://, which browsers block
-  // when the site itself is served over https://. This proxy fetches the
-  // http:// URL server-side and returns it to us over https://.
-  const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(weatherstackUrl)}`;
+  const url = `https://api.weatherstack.com/current?access_key=${ACCESS_KEY}&query=${encodeURIComponent(city)}`;
 
   const response = await fetch(url);
 
