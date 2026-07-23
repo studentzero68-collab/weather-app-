@@ -2,6 +2,7 @@ const searchForm = document.getElementById("search-form");
 const cityInput = document.getElementById("city-input");
 const appMain = document.getElementById("app-main");
 const searchButton = searchForm.querySelector("button");
+const recentSearchesContainer = document.getElementById("recent-searches");
 
 const ACCESS_KEY = "YOUR_WEATHERSTACK_ACCESS_KEY"; // paste your real key here
 
@@ -101,6 +102,23 @@ function saveRecentSearch(city) {
   recent.unshift(city);
   recent = recent.slice(0, 5);
   localStorage.setItem("recentSearches", JSON.stringify(recent));
+  renderRecentSearches();
+}
+
+function renderRecentSearches() {
+  const recent = getRecentSearches();
+
+  if (recent.length === 0) {
+    recentSearchesContainer.innerHTML = "";
+    return;
+  }
+
+  recentSearchesContainer.innerHTML = `
+    <span class="recent-label">Recent:</span>
+    ${recent
+      .map((city) => `<button type="button" class="recent-chip">${city}</button>`)
+      .join("")}
+  `;
 }
 
 async function runSearch(city) {
@@ -144,4 +162,5 @@ const lastCity = localStorage.getItem("lastCity");
 if (lastCity) {
   cityInput.value = lastCity;
   runSearch(lastCity);
+  renderRecentSearches();
 }
