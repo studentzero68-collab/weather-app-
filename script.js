@@ -162,5 +162,5 @@ const lastCity = localStorage.getItem("lastCity");
 if (lastCity) {
   cityInput.value = lastCity;
   runSearch(lastCity);
-  renderRecentSearches();
 }
+renderRecentSearches();
