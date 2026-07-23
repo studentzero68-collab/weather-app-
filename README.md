@@ -16,7 +16,7 @@ A vanilla JavaScript weather app that lets you search any city and see current c
 
 ## One Challenge I Hit
 
-Weatherstack's free plan only supports `http://` requests, not `https://`. This works fine locally, but caused problems once deployed to a host that serves the site over HTTPS, since browsers block insecure HTTP requests from a secure page (a "mixed content" error). [Note what you actually did to resolve this once you deploy — update this line once you've solved it.]
+Weatherstack's free plan only supports `http://` requests, not `https://`. This works fine locally, but caused problems once deployed to Netlify, since browsers block insecure HTTP requests from a secure page (a "mixed content" error). I solved this by routing the request through a free proxy (allorigins.win) that fetches the HTTP data server-side and returns it over HTTPS.
 
 ## Tech Stack
 
@@ -30,4 +30,4 @@ Open `index.html` directly in your browser, or use a tool like VS Code's Live Se
 
 ## Live Demo
 
-[Add your deployed URL here once live]
+[https://weather-trying.netlify.app/](weather-trying)
